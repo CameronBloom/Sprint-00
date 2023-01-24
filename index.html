@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Rock Paper Scissors</title>
+  <style>
+    * {
+      font-size: 1.2rem;
+    }
+
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tool {
+      padding: 4px;
+      border: 4px solid white;
+      margin: 2px;
+    }
+
+    .tool.selected {
+      border-color: black;
+    }
+
+    .tool.selected.computer {
+      border-style: dashed;
+      border-color: blue;
+    }
+
+
+  </style>
+</head>
+
+<body>
+  <div id="rock" class="tool">🪨 Rock</div>
+  <div id="paper" class="tool">📃 Paper</div>
+  <div id="scissors" class="tool">✂️ Scissors</div>
+  <h3 id="info">Pick your tool...</h3>
+
+  <script>
+    // function selectRock() {
+    //   rock.className = 'tool selected'
+    //   paper.className = 'tool'
+    //   scissors.className = 'tool'
+    //   info.textContent = "You picked rock!"
+    // }
+    // function selectPaper() {
+    //   rock.className = 'tool'
+    //   paper.className = 'tool selected'
+    //   scissors.className = 'tool'
+    //   info.textContent = "You picked paper!"
+    // }
+    // function selectScissors() {
+    //   rock.className = 'tool'
+    //   paper.className = 'tool'
+    //   scissors.className = 'tool selected'
+    //   info.textContent = "You picked scissors!"
+    // }
+    function play(tool) {
+      console.log(`User selected ${tool.id}`)
+      const options = [rock, paper, scissors]
+      const randomIndex = Math.floor(Math.random() * 3)
+      let computerTool = options[randomIndex]
+      computerTool.className = 'tool selected computer'
+
+      if (tool === computerTool) {
+        // change the UI to inform user of draw
+        info.textContent += ` It's a draw...`
+      } else if (tool === rock && computerTool === scissors 
+        || tool === paper && computerTool === rock 
+        || tool === scissors && computerTool === paper) {
+        info.textContent += ` You win!`
+      } else {
+        info.textContent += ` You lose...`
+      }
+
+      
+    }
+    function selectTool(clickEvent) {
+      clearFormatting();
+      const tool = clickEvent.target
+      tool.className = 'tool selected'
+      info.textContent = `You picked ` + tool.id + `!`
+      play(tool);
+    }
+
+    function clearFormatting() {
+      rock.className = 'tool'
+      paper.className = 'tool'
+      scissors.className = 'tool'
+      info.textContent = `Pick your tool...`
+    }
+
+    rock.onclick = selectTool
+    paper.onclick = selectTool
+    scissors.onclick = selectTool
+  </script>
+</body>
+
+</html>
